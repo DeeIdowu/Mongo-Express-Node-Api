@@ -6,10 +6,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 //call mongoose
-mongoose.connect('mongodb+srv://Node-Shop-Admin:' + process.env.MONGO_ATLAS_PW '@node-rest-shop-ttkb2.mongodb.net/test?retryWrites=true', 
+mongoose.connect('mongodb+srv://Node-Shop-Admin:' + process.env.MONGO_ATLAS_PW + '@node-rest-shop-ttkb2.mongodb.net/test?retryWrites=true', 
 {
-   //making mongodb client work:
-   useMongoClient: true 
+  //check
+  useNewUrlParser: true
 }
 );
 

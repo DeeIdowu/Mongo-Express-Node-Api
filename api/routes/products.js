@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 
 //to register different routes, 
 //this is for the /products endpoint via GET and Post Routes
 
 //this is the get request via /products url this is only '/' due to exporting to app.js
+
+//deriving from Mongoose schema:
+const Product = require('../models/products');
 
 router.get('/', (req,res,next) => {
     //summoning new products
@@ -13,6 +17,18 @@ router.get('/', (req,res,next) => {
         price: req.body.price
     }
 
+    //storage of data 
+    const Product = new Product ({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        price: req.body.price
+
+    });
+    //calling special object
+    product.save().then(result => {
+        console.log(result)
+    }) //storing the information in the database
+    .catch(err => console.log(err));
     res.status(200).json({
         message: 'Handling get requests',
         //confirming of product request
@@ -23,14 +39,8 @@ router.get('/', (req,res,next) => {
 //handle post requests
 
 router.post('/', (req,res,next) => {
-    //handling orders:
-    const order = {
-        productId: req.body.productId,
-        quantity: req.body.quantity
-    }
     res.status(200).json({
         message: 'Handling  post requests',
-        order: order
     });
 });
 
