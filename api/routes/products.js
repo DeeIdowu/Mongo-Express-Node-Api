@@ -20,5 +20,36 @@ router.post('/', (req,res,next) => {
     });
 });
 
+//handling get requests for individual ids
+router.get('/:productId', (req, res, next) => {
+    const id = req.params.productId;
+    if (id === 'special'){
+        res.status(200).json({
+            message: 'Discovery of new ID',
+            //extract and storage of ID
+            id: id
+        });
+    } else {
+        res.status(200).json({
+            message: 'Passage of ID'
+        });
+    }
+})
+
+//handling patch requests for individual ids:
+router.patch('/:productId', (req, res, next) => {
+    res.status(200).json({
+        message: 'Product updated'
+    });
+});
+
+//handling delete requests for individual ids:
+router.delete('/:productId', (req, res, next) => {
+    res.status(200).json({
+        message: 'Product deleted'
+    });
+});
+
+
 //export the file
 module.exports = router;
