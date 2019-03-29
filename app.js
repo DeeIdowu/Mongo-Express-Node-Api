@@ -2,8 +2,16 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+//call mongoose
+mongoose.connect('mongodb+srv://Node-Shop-Admin:' + process.env.MONGO_ATLAS_PW '@node-rest-shop-ttkb2.mongodb.net/test?retryWrites=true', 
+{
+   //making mongodb client work:
+   useMongoClient: true 
+}
+);
 
 //import of /products endpoint route:
 const productRoutes = require('./api/routes/products');
@@ -30,6 +38,8 @@ app.use((req, res, next) => {
         res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET' )
         return res.status(200).json({});
     }
+    //if not returning immeditately
+    next();
 
 });
 
