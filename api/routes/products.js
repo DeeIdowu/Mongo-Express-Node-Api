@@ -7,16 +7,30 @@ const router = express.Router();
 //this is the get request via /products url this is only '/' due to exporting to app.js
 
 router.get('/', (req,res,next) => {
+    //summoning new products
+    const product = {
+        name: req.body.name,
+        price: req.body.price
+    }
+
     res.status(200).json({
-        message: 'Handling get requests'
+        message: 'Handling get requests',
+        //confirming of product request
+        createdProduct: product
     });
 });
 
 //handle post requests
 
 router.post('/', (req,res,next) => {
+    //handling orders:
+    const order = {
+        productId: req.body.productId,
+        quantity: req.body.quantity
+    }
     res.status(200).json({
-        message: 'Handling  post requests'
+        message: 'Handling  post requests',
+        order: order
     });
 });
 
