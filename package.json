@@ -1,0 +1,26 @@
+{
+  "name": "mongo-express-node-api",
+  "version": "1.0.0",
+  "description": "RESTful API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeeIdowu/Mongo-Express-Node-Api.git"
+  },
+  "keywords": [
+    "node",
+    "mongo"
+  ],
+  "author": "Dennis Idowu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DeeIdowu/Mongo-Express-Node-Api/issues"
+  },
+  "homepage": "https://github.com/DeeIdowu/Mongo-Express-Node-Api#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
