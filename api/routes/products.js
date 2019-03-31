@@ -11,54 +11,70 @@ const mongoose = require('mongoose');
 const Product = require('../models/products');
 
 router.get('/', (req,res,next) => {
-    //summoning new products
-    const product = {
-        name: req.body.name,
-        price: req.body.price
-    }
-
-    //storage of data 
-    const Product = new Product ({
-        _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
-        price: req.body.price
-
-    });
-    //calling special object
-    product.save().then(result => {
-        console.log(result)
-    }) //storing the information in the database
-    .catch(err => console.log(err));
-    res.status(200).json({
-        message: 'Handling get requests',
-        //confirming of product request
-        createdProduct: product
-    });
+   //to return all objects stored with query operators
+   Product.find()
+   .exec()
+   .then(docs => {
+       console.log(docs);
+       res.status(200).json(docs);
+   })
+   .catch(err => {
+       console.log(err);
+       res.status(500).json({
+           error: err
+       })
+   })
 });
 
 //handle post requests
 
-router.post('/', (req,res,next) => {
-    res.status(200).json({
-        message: 'Handling  post requests',
+router.post('/', (req,res, next) => {
+    //storage of data 
+    const product = new Product ({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        price: req.body.price
     });
+    product
+    .save()
+    .then(result => {
+        console.log(result);
+        res.status(201).json({
+            message: 'Handling  post requests',
+           //confirming of product request
+           createdProduct: result
+        });
+
+    })
+    .catch(err => console.log(err));
+    res.status(500).json({
+        error: err
+    })
+   
 });
 
 //handling get requests for individual ids
 router.get('/:productId', (req, res, next) => {
     const id = req.params.productId;
-    if (id === 'special'){
-        res.status(200).json({
-            message: 'Discovery of new ID',
-            //extract and storage of ID
-            id: id
-        });
+    //utilizing object model Product and findById Method:
+Product.findById(id)
+.exec()
+//grabbing the document and logging via console.log
+.then(doc => {
+    console.log("From database", doc);
+    if(doc){
+        res.status(200).json(doc);
     } else {
-        res.status(200).json({
-            message: 'Passage of ID'
-        });
+        res.status(404).json({message: 'No valid ID'});
     }
-})
+    //asynchronous promise providing response
+    res.status(200).json(doc);
+}).catch(err => 
+    console.log(err));
+    //fixing get requests
+    //sending failure response
+    res.status(500).json({error : err});
+});
 
 //handling patch requests for individual ids:
 router.patch('/:productId', (req, res, next) => {
@@ -69,9 +85,18 @@ router.patch('/:productId', (req, res, next) => {
 
 //handling delete requests for individual ids:
 router.delete('/:productId', (req, res, next) => {
-    res.status(200).json({
-        message: 'Product deleted'
-    });
+   const id = req.params.productId;
+   Product.remove({_id: id})
+   .exec()
+   .then(result =>{
+       res.status(200).json(result);
+   })
+   .catch(err => {
+       console.log(err);
+       res.status(500).json({
+           error: err
+       });
+   });
 });
 
 
